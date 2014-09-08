@@ -1,0 +1,32 @@
+#container{
+	width: 100%;
+}
+#appContainer{
+	border: solid grey 1px;
+	padding: 10px;
+	height: 800px;
+	width: 1100px;
+	margin: 0px auto;
+	position: relative;
+	display:flex;
+}
+#addPokemonContainer{
+	border: solid grey 1px;
+	padding: 10px;
+	height: 300px;
+	width: 300px;
+}
+#searchPokemonContainer{
+	border: solid grey 1px;
+	padding: 10px;
+	height: 300px;
+	width: 300px;
+}
+#searchResultsContainer	{
+	border: solid grey 1px;
+	padding: 10px;
+	height: 300px;
+	width: 300px;
+	float: right;	
+}
+	
