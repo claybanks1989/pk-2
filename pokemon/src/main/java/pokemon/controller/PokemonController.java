@@ -45,7 +45,7 @@ public class PokemonController {
 
  */
 	
-	 @RequestMapping(value = "/add",  method=RequestMethod.POST)
+	@RequestMapping(value = "/add",  method=RequestMethod.POST)
 	public String addPokemon(
 			@RequestParam Map<String,String> requestParams,
 			@ModelAttribute Pokemon pokemon, Model model) {
@@ -69,6 +69,7 @@ public class PokemonController {
 			System.out.println("Saved " + pokemon.getName() + " successfully");
 		}
 		catch(Exception e){
+			session.getTransaction().rollback();
 			System.out.println("Error: " + e);
 		}
 		finally{
@@ -76,15 +77,21 @@ public class PokemonController {
 		}
 		System.out.println("Adding a pokemon");
 		
-		return "Pokemon"; 
+		return "pokemonlist"; 
 	}
-/*	@RequestMapping(value = "/search",  method=RequestMethod.GET)
-	public String getPokemon(@RequestParam("pokemon_name") String pokemonName){
+	
+	@RequestMapping(value = "/pokemonlist",  method=RequestMethod.GET)
+	public String getPokemonList(){
+		
+		return null;
+	}
+	@RequestMapping(value = "/search",  method=RequestMethod.GET)
+	public String getPokemon(@RequestParam("pokemon_id") String pokemonName){
 	
 		System.out.println("Pokemon found: " + pokemonName);
 		return pokemonName;
 	}
-	 */
+	 
 	/*@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public Pokemon deletePokemon(){
 		 System.out.println("Deleting a pokemon");

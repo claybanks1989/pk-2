@@ -10,7 +10,14 @@
 </head>
 <body>
 <div id="addedContainer">
-	<p>You've added some BullCrap</p>
+	 <c:forEach items="${msg}" var="employee">
+            <tr>
+                <td><c:out value="${employee.id}" /></td>
+                <td><c:out value="${employee.name}" /></td>
+                <td><c:out value="${employee.age}" /></td>
+                <td><c:out value="${employee.email}" /></td>
+            </tr>
+        </c:forEach>
 </div>
 </body>
 </html>
