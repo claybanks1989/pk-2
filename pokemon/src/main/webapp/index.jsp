@@ -15,10 +15,10 @@
 			<div id=addPokemonContainer>
 				<form id="addPokemonForm" action="add" method="POST">
 				
-					ID:<input type="text" name="id"><br>
-					Name:<input type="text" name="name"><br>
-					Type:<input type="text" name="type"><br>
-					<input type="submit" class="btn btn-primary" id="searchButton" value="Add">
+					ID:<input type="text" name="pId"><br>
+					Name:<input type="text" name="pName"><br>
+					Type:<input type="text" name="pType"><br>
+					<input type="submit" class="btn btn-primary" id="submitButton" value="Add">
 				</form>
 			</div>
 			<div id="searchPokemonContainer">

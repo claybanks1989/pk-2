@@ -2,6 +2,8 @@ package pokemon.app;
 
 import java.util.Date;
 
+import javax.transaction.SystemException;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -13,7 +15,7 @@ import pokemon.user.dto.User;
 
 public class Main {
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws SystemException{
 		System.out.println("Starting Pokemon App...");
 		Pokemon pokemon = new Pokemon();
 		pokemon.setP_id(10);
@@ -35,21 +37,24 @@ public class Main {
 
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		
-		//session.save(pokemon);
-		
-		
-		
+		try {
+			session.save(pokemon);
+			session.getTransaction().commit();
+			System.out.println("Saved " + pokemon.getName() + " successfully");
+		}
+		finally{
+			
+		}
 		pokemon = null;
 		
 
 		session = sessionFactory.openSession();
 		session.beginTransaction();
-		pokemon = (Pokemon) session.get(Pokemon.class, 54);
-		User user = new User();
+		pokemon = (Pokemon) session.get(Pokemon.class, 25);
+	/*	User user = new User();
 		user.setName("Clay");
 		user.setSearchQuery("Pokemon Searched For: " + pokemon.getName());
-		session.save(user);
+		session.save(user);*/
 		System.out.println("Your Pokemon is: " + pokemon.getName());
 		session.getTransaction().commit();
 		
