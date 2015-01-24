@@ -1,11 +1,13 @@
 package pokemon.controller;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
-import javax.transaction.SystemException;
-
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.springframework.http.HttpStatus;
@@ -21,13 +23,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import pokemon.pokemon.dao.PokemonDAOImpl;
 import pokemon.pokemon.dto.Pokemon;
 //@RequestMapping(value="/pokemon")
+import pokemon.service.PokemonService;
 
 @Controller
 @RequestMapping("/*")
 public class PokemonController {
 
+	private PokemonService pokemonService;
+	
 	Configuration configuration = new Configuration().configure();
 	StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
 	SessionFactory sessionFactory = configuration.buildSessionFactory(builder.build());
@@ -68,7 +74,7 @@ public class PokemonController {
 			session.getTransaction().commit();
 			System.out.println("Saved " + pokemon.getName() + " successfully");
 		}
-		catch(Exception e){
+		catch(HibernateException e){
 			session.getTransaction().rollback();
 			System.out.println("Error: " + e);
 		}
@@ -80,15 +86,28 @@ public class PokemonController {
 		return "pokemonlist"; 
 	}
 	
-	@RequestMapping(value = "/pokemonlist",  method=RequestMethod.GET)
-	public String getPokemonList(){
-		
-		return null;
-	}
+ 
 	@RequestMapping(value = "/search",  method=RequestMethod.GET)
-	public String getPokemon(@RequestParam("pokemon_id") String pokemonName){
-	
-		System.out.println("Pokemon found: " + pokemonName);
+	public String getPokemon(@RequestParam("pokemon_name") String pokemonName){
+		Session session = sessionFactory.openSession();
+		Transaction tx = null;
+		try{
+			tx = session.beginTransaction();
+			List<?> pokemonList = session.createQuery("FROM Pokemon").list(); 
+	         for (Iterator<?> iterator = 
+	                           pokemonList.iterator(); iterator.hasNext();){
+	            Pokemon pokemon = (Pokemon) iterator.next(); 
+	            System.out.print("ID: " + pokemon.getP_id()); 
+	            System.out.print("Name: " +  pokemon.getName()); 
+	            System.out.println("Type: " + pokemon.getType()); 
+	         }
+			
+		}catch (HibernateException e) {
+	         if (tx!=null) tx.rollback();
+	         e.printStackTrace(); 
+	      }finally {
+	         session.close(); 
+	    }
 		return pokemonName;
 	}
 	 

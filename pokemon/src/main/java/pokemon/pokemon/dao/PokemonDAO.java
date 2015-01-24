@@ -21,7 +21,7 @@ public interface PokemonDAO {
 
     // List
 
-    public List<Pokemon> getStudentList();
+    public List<Pokemon> getPokemonList();
 
     // save
 
