@@ -10,7 +10,7 @@
 	   	<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
 	   	<property name="hibernate.connection.url">jdbc:mysql://localhost/pokemon</property>
 	   	<property name="hibernate.connection.username">root</property>
-	   	<property name="hibernate.connection.password">crappy</property>
+	   	<property name="hibernate.connection.password"></property>
 		    
 	    <!--  Echo all executed SQL to stdout -->
  		<property name="show_sql">true</property>
